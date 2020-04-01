@@ -20,26 +20,26 @@ class PatientsController < ApplicationController
     end	
   
   
-    get '/pets/:id/edit' do 
-      @pet = Pet.find(params[:id])
-      @owners = Owner.all
-      erb :'/pets/edit'
+    get '/patients/:id/edit' do 
+      @patient = Patient.find(params[:id])
+      @doctors = Doctor.all
+      erb :'/patients/edit'
     end
     
-    get '/pets/:id' do 
-      @pet = Pet.find(params[:id])
-      erb :'/pets/show'
+    get '/patients/:id' do 
+      @patient = Patient.find(params[:id])
+      erb :'/patients/show'
     end
     
-    patch '/pets/:id' do 
-      if !params[:pet].keys.include?("owner_id")
-      params[:pet]["owner_id"] = []
+    patch '/patients/:id' do 
+      if !params[:patient].keys.include?("doctor_id")
+      params[:patient]["doctor_id"] = []
       end
-      @pet = Pet.find(params[:id])
-      @pet.update(params["pet"])
-      if !params["owner"]["name"].empty?
-        @pet.owner = Owner.create(name: params["owner"]["name"])
+      @patient = Patient.find(params[:id])
+      @patient.update(params["patient"])
+      if !params["doctor"]["name"].empty?
+        @patient.doctor = Doctor.create(name: params["doctor"]["name"])
       end
-      redirect "pets/#{@pet.id}"
+      redirect "patients/#{@patient.id}"
     end
   end

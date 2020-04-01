@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20200331184903) do
   end
 
   create_table "medicin", force: :cascade do |t|
-    t.string "medicins"
+    t.string "name"
     t.string "notes"
   end
 
