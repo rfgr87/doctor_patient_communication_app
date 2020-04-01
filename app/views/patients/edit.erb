@@ -1,0 +1,12 @@
+<form action="/patients" method="POST">
+  <label>Name:</label><br></br>
+    <input type="text" name="patient[name]" id="patient_name" value="<%= @patient.name %>"><br></br>
+
+
+    <label>Choose an existing Doctor:</label><br></br>
+    <%@doctors.all.each do |doctor|%>
+      <input type="radio" name="patient[doctor_id]" id="<%= doctor.id %>" value="<%= doctor.id %>" <%= 'checked' if @pet.owner == owner %>><%= owner.name %></input>
+    <%end%><br /><br />
+
+  <input type="submit" value="Update Patient">
+</form>
