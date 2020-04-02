@@ -20,11 +20,15 @@ class DoctorsController < ApplicationController
   #   erb :"/doctors/#{@doctor.id}"
   # end
 
+  get "/doctors/login" do 
+    erb :'/doctors/login'
+  end
+
   post '/doctors/login' do
     @doctor = Doctor.find_by(params[:id])
     if @doctor && @doctor.authenticate(params[:password])
       session[:doctor_id] = @doctor.id 
-      redirect "/doctors/#{@doctor.id}"
+      erb :'/doctors/show'
     else
       erb :'/doctors/failure'
     end
@@ -38,10 +42,6 @@ class DoctorsController < ApplicationController
     else
       redirect "/doctors/failure"
     end
-  end
-
-  get "/doctors/login" do 
-    erb :'/doctors/login'
   end
 
   get "/doctors/failure" do
@@ -59,14 +59,14 @@ class DoctorsController < ApplicationController
   end
 
   get '/doctors/:id/edit' do 
-    @doctor = Doctor.find(params[:id])
-    erb :'/patients/edit'
+    @doctor = Doctor.find(session[:doctor_id])
+    erb :'/doctors/edit'
   end
 
   patch '/doctors/:id' do 
     @doctor = Doctor.find(params[:id])
     @doctor.update(params["doctor"])
-    redirect "doctors/#{@doctor.id}"
+    erb :'doctors/show'
   end
 end
 #Idea for login based on the sessios lab

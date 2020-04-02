@@ -1,11 +1,16 @@
-<h1>Doctor: <%=@doctor.name%></h1>
-<h4>Patients:</h4>
+<h1>Doctor: <%=@doctor.name%></h1><br>
+<h4>Username: <%=@doctor.username%></h4><br>
+<h4>Email: <%=@doctor.email%></h4><br>
+<h4>Patients:</h4><br>
 <ul>
-  <% if !@doctor.patient.empty?%>
+  <% if !@doctor.patients.empty?%>
     <%@doctor.patients.each do |patient|%>
     <li><%=patient.name%></li>
+      <%end%>
+    <%else%>
+    <%="You currently have no patients."%>
     <%end%>
-  <%end%>
+    
 </ul>
 <br>
-<p>To edit this information go to <a href='/doctors/:id/edit'>Edit Doctor</a>.</p>
+<p>To edit your account information or password go to <a href='/doctors/:id/edit'>Edit Doctor</a>.</p>

@@ -1,16 +1,26 @@
-<h1><%=@patient.name%></h1>
+<h1>Patient Name: <%=@patient.name%></h1><br>
+<h4>Username: <%=@patient.username%></h4><br>
+<h4>Email: <%=@patient.username%></h4><br>
+
 <h4>Doctor:</h4>
 <ul>
-  <li><%=@patient.doctor.name%></li>
-  
+  <%if !@patient.doctor_id.nil?%>
+  <%=@patient.doctor.name%></li>
+  <%else%>
+  <p>You have not chosen a doctor yet.<p>
+  <%end%>
+
   <h4>Medicins:</h4>
-  <%if !@patient.medicin.empty?%>
+  <%if !@patient.medicins.empty?%>
     <%@patient.medicins.each do |medicin|%>
     <li><%=medicin.name%><br>
         <%=medicin.notes%><br>
-    <%end%>
-    </li>
+      <%end%>
+      </li>
+    <%else%>
+    <p>You have no medicins prescribed.<p>
   <%end%>
 </ul>
 <br>
-<p>To edit this information go to <a href='/patients/:id/edit'>Edit Patient</a>.</p>
+<p>To edit your account information and choose
+ or change your doctor go to <a href='/patients/:id/edit'>Edit Patient</a>.</p><br>

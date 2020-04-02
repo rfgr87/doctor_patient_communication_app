@@ -1,4 +1,4 @@
-# edit.erb
+
 <h1>Update Patient</h1>
  
 <h2>Edits for <%= @patient.name %></h2>
@@ -8,16 +8,21 @@
     <label>Edit Patient's Name:</label><br>
     <input type="text" name="patient[name]" value="<%= @patient.name %>"><br>
     <label>Edit Patient's Username:</label><br>
-    <input type="text" name="patient[username]" value="<%= @patient.username%>%"><br>
+    <input type="text" name="patient[username]" value="<%= @patient.username%>"><br>
     <label>Edit Patient's Email:</label><br>
-    <input type="text" name="patient[email]" value="<%= @patient.email%>%"><br>
+    <input type="text" name="patient[email]" value="<%= @patient.email%>"><br>
     <label>Edit Patient's Password:</label><br>
-    <input type="text" name="patient[password]" value="<%= @patient.password%>%"><br>    
+    <input type="text" name="patient[password]" value="<%= @patient.password%>"><br>
+    <br>    
     
     <label>Available Doctors:</label><br>
-    <%@doctors.each do |doctor|%>
-      <input type="radio" name="patient[doctor_id]" id="<%= doctor.id %>" value="<%= doctor.id %>" <%= 'checked' if @pet.owner == owner %>><%= owner.name %></input>
-    <%end%><br /><br />
-
+    <%if @doctors.size != 0%>
+      <%@doctors.each do |doctor|%>
+        <input type="radio" name="patient[doctor_id]" id="<%= doctor.id %>" value="<%= doctor.id %>" <%= 'checked' if @patient.doctor == doctor %>><%= doctor.name %></input>
+        <%end%><br>
+      <%else%>
+      <p>There are no doctors available at this moment.<p>
+      <%end%>
+      <br>
     <input type="submit" value="Update Patient">
   </form>

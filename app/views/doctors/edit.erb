@@ -1,4 +1,4 @@
-# edit.erb
+
 <h1>Update Doctor</h1>
  
 <h2>Edits for <%= @doctor.name %></h2>
@@ -8,10 +8,10 @@
     <label>Edit Doctor's Name:</label><br>
     <input type="text" name="doctor[name]" value="<%= @doctor.name %>"><br>
     <label>Edit Doctor's Username:</label><br>
-    <input type="text" name="doctor[username]" value="<%= @doctor.username%>%"><br>
+    <input type="text" name="doctor[username]" value="<%= @doctor.username %>"><br>
     <label>Edit Doctor's Email:</label><br>
-    <input type="text" name="doctor[email]" value="<%= @doctor.email%>%"><br>
+    <input type="text" name="doctor[email]" value="<%= @doctor.email %>"><br>
     <label>Edit Doctor's Password:</label><br>
-    <input type="text" name="doctor[password]" value="<%= @doctor.password%>%"><br>    
+    <input type="text" name="doctor[password]" value="<%= @doctor.password %>"><br>    
     <input type="submit" value="Update Doctor">
   </form>

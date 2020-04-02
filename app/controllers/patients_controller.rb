@@ -4,9 +4,19 @@ class PatientsController < ApplicationController
     erb :'patients/main'
   end
 
+  # post '/patients/login' do
+  #   @patient = Patient.find_by(params[:id])
+  #   erb :"/patients/#{@patient.id}"
+  # end
+
   post '/patients/login' do
     @patient = Patient.find_by(params[:id])
-    erb :"/patients/#{@patient.id}"
+    if @patient && @patient.authenticate(params[:password])
+      session[:patient_id] = @patient.id 
+      erb :'/patients/show'
+    else
+      erb :'/patients/failure'
+    end
   end
 
   post "/patients/singup" do
@@ -32,9 +42,11 @@ class PatientsController < ApplicationController
   end
 
   get '/patients/:id/edit' do 
-    @patient = Patient.find(params[:id])
+    @patient = Patient.find(session[:patient_id])
+    @doctors = Doctor.all
     erb :'/patients/edit'
   end
+
 
   patch '/patients/:id' do 
     @patient = Patient.find(params[:id])
