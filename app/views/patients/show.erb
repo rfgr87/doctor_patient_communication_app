@@ -2,8 +2,15 @@
 <h4>Doctor:</h4>
 <ul>
   <li><%=@patient.doctor.name%></li>
-  <% @patient.medicins.each do |medicin|%>
-  <li><%= medicin.name%><br>
-  <%= medicin.notes%><br>
-  </li>
+  
+  <h4>Medicins:</h4>
+  <%if !@patient.medicin.empty?%>
+    <%@patient.medicins.each do |medicin|%>
+    <li><%=medicin.name%><br>
+        <%=medicin.notes%><br>
+    <%end%>
+    </li>
+  <%end%>
 </ul>
+<br>
+<p>To edit this information go to <a href='/patients/:id/edit'>Edit Patient</a>.</p>

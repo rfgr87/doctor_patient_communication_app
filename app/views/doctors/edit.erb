@@ -5,7 +5,13 @@
  
   <form action="/doctors/<%= @doctor.id %>" method="POST">
     <input id="hidden" type="hidden" name="_method" value="patch">
-    <label>Edit the Doctor's Name:</label><br>
+    <label>Edit Doctor's Name:</label><br>
     <input type="text" name="doctor[name]" value="<%= @doctor.name %>"><br>
+    <label>Edit Doctor's Username:</label><br>
+    <input type="text" name="doctor[username]" value="<%= @doctor.username%>%"><br>
+    <label>Edit Doctor's Email:</label><br>
+    <input type="text" name="doctor[email]" value="<%= @doctor.email%>%"><br>
+    <label>Edit Doctor's Password:</label><br>
+    <input type="text" name="doctor[password]" value="<%= @doctor.password%>%"><br>    
     <input type="submit" value="Update Doctor">
   </form>

@@ -1,6 +1,8 @@
 class Doctor < ActiveRecord::Base
-    has_many :patients
-    has_many :medicins, through: :patients
+  has_secure_password
+  
+  has_many :patients
+  has_many :medicins, through: :patients
    
-    validates_presence_of :name, :username, :email, :password
+  validates_presence_of :name, :username, :email, :password_digest
   end

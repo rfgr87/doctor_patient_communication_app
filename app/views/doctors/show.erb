@@ -1,7 +1,11 @@
 <h1>Doctor: <%=@doctor.name%></h1>
 <h4>Patients:</h4>
 <ul>
-  <%@doctor.patients.each do |patient|%>
-  <li><%=patient.name%></li>
+  <% if !@doctor.patient.empty?%>
+    <%@doctor.patients.each do |patient|%>
+    <li><%=patient.name%></li>
+    <%end%>
   <%end%>
 </ul>
+<br>
+<p>To edit this information go to <a href='/doctors/:id/edit'>Edit Doctor</a>.</p>
