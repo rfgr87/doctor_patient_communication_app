@@ -2,23 +2,9 @@ require 'pry'
 
 class DoctorsController < ApplicationController
 
-  # get '/doctors' do
-  #   @doctors = Doctor.all
-  #   erb :'/doctors/index' 
-  # end
-
-  # get '/doctors/new' do
-  #   erb :'/owners/new'
-  # end
-
   get '/doctors/main' do
     erb :'doctors/main'
   end
-
-  # post '/doctors/login' do
-  #   @doctor = Doctor.find_by(params[:id])
-  #   erb :"/doctors/#{@doctor.id}"
-  # end
 
   get "/doctors/login" do 
     erb :'/doctors/login'
@@ -64,11 +50,35 @@ class DoctorsController < ApplicationController
   end
 
   patch '/doctors/:id' do 
-    @doctor = Doctor.find(params[:id])
-    @doctor.update(params["doctor"])
+    @doctor = Doctor.find(session[:doctor_id])
+    @doctor.update(params[:doctor])
     erb :'doctors/show'
   end
+
+  get '/doctors/select_patient' do 
+    @doctor = Doctor.find(session[:doctor_id])
+    @patients = @doctor.patients
+    erb :'doctors/select_patient'
+  end
+
+  post '/doctors/edit_patient' do 
+    @doctor = Doctor.find(session[:doctor_id])
+    @patient = Patient.find(params[:patient_id])
+    erb :'doctors/edit_patient'
+  end
+
+
+  patch '/doctors/edit_patient' do 
+    @patient = Patient.find_by(params[:patient_id])
+    @medicin = Medicin.create(name: params[:medicin_name], notes: params[:medicin_notes])
+    @patient.medicins = []
+    @patient.medicins << @medicin
+    @patient.save
+    erb :'doctors/updated_patient'
+  end
 end
+
+
 #Idea for login based on the sessios lab
 
 

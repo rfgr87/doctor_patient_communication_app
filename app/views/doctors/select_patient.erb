@@ -1,0 +1,14 @@
+<form action="/doctors/edit_patient" method="POST">
+    <label>Select Patient:</label><br>
+    <%if @patients.size != 0%>
+      <%@patients.each do |patient|%>
+        <li>
+        <input type="radio" name="patient_id" id="<%= patient.id %>" value="<%= patient.id %>"><%= patient.name %></input>
+        </li>
+        <%end%><br>
+      <%else%>
+      <p>There are no patients at this moment.<p>
+      <%end%>
+      <br>
+    <input type="submit" value="Select Patient">
+  </form>
