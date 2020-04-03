@@ -5,21 +5,47 @@
 
     <label>Patient information:</label><br>
     <%=@patient.name%><br>
+    <br>
+    <p>Patient ID:<p>
     <input type="button" name="patient_id" id="<%= @patient.id %>" value="<%=@patient.id%>"</input><br>
     <br>
     <h4>Patient medicins:</h4>
     <%if !@patient.medicins.empty?%>
       <% @patient.medicins.each do |medicin|%>
         <li>
-        <input type="checkbox" name="medicin_name" id="<%= medicin.id %>" value="<%=medicin.name%>"</input><br>
-        <input type="text" name="medicin_notes" id="<%= medicin.notes %>" value="<%=medicin.notes%>"</input><br>
+        <%=medicin.name%><br>
+        <%=medicin.notes%><br>
         </li>
         <%end%><br>
       <%else%>
       <p>There are no medicins for this patient at this moment.<p>
       <%end%>
-      <h4>To prescribe a medicin to this patient:</h4>
+      <h4>To prescribe a new medicin to this patient:</h4>
       <input type="text" name="medicin_name" id="medicin_id" value="medicin_name"</input><br>
-      <input type="textbox" name="medicin_notes" id="medicin_notes" value="medicin_notes"</input><br>
+      <textarea name="medicin_notes" rows="4" cols="50"></textarea><br>
     <input type="submit" value="Edit Patient Medicins">
+  </form>
+
+<h2>To delete a medicin from this patient check the medicin's checkbox</h2>
+  <form action="/doctors/delete_medicins" method="POST">
+   <input id="hidden" type="hidden" name="_method" value="patch">
+
+    <label>Patient's Medicins':</label><br>
+    <%=@patient.name%><br>
+    <br>
+    <p>Patient ID:<p>
+    <input type="button" name="patient_id" id="<%= @patient.id %>" value="<%=@patient.id%>"</input><br>
+    <br>
+    <h4>Patient medicins:</h4>
+    <%if !@patient.medicins.empty?%>
+      <% @patient.medicins.each do |medicin|%>
+        <li>
+        <input type="radio" name="medicin_id" id="<%=medicin.id%>" value="<%=medicin.id%>"<%= 'checked' if !@patient.medicins.include?(medicin) %>><%= medicin.name %></input><br>
+         <p><%=medicin.notes%><br>
+        </li>
+        <%end%><br>
+      <%else%>
+      <p>There are no medicins for this patient at this moment.<p>
+      <%end%>
+    <input type="submit" value="Delete Patient's Medicin">
   </form>

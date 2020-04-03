@@ -39,20 +39,43 @@ class DoctorsController < ApplicationController
     redirect to '/'
   end
 
-  get '/doctor/:id' do 
-    @doctor = Doctor.find(params[:id])
+  get '/doctors/id' do 
+    @doctor = Doctor.find(session[:doctor_id])
     erb :'/doctors/show'
   end
 
-  get '/doctors/:id/edit' do 
+  get '/doctors/id/edit' do 
     @doctor = Doctor.find(session[:doctor_id])
     erb :'/doctors/edit'
   end
 
-  patch '/doctors/:id' do 
+  patch '/doctors/edit_patient' do 
+    @patient = Patient.find_by(params[:patient_id])
+    @medicin = Medicin.find_by(name: params[:medicin_name])
+    if !@medicin.nil?
+      @patient.medicins << @medicin
+      @patient.save
+    else
+      @medicin = Medicin.create(name: params[:medicin_name], notes: params[:medicin_notes])
+      @patient.medicins << @medicin
+      @patient.save
+    end
+    erb :'doctors/updated_patient'
+  end
+
+
+  patch '/doctors/id' do 
     @doctor = Doctor.find(session[:doctor_id])
     @doctor.update(params[:doctor])
     erb :'doctors/show'
+  end
+
+  patch '/doctors/delete_medicins' do 
+    @patient = Patient.find_by(params[:patient_id])
+    @medicin = Medicin.find_by(params[:medicin_id])
+    @medicin.destroy
+    @patient.save
+    erb :'doctors/updated_patient'
   end
 
   get '/doctors/select_patient' do 
@@ -67,15 +90,6 @@ class DoctorsController < ApplicationController
     erb :'doctors/edit_patient'
   end
 
-
-  patch '/doctors/edit_patient' do 
-    @patient = Patient.find_by(params[:patient_id])
-    @medicin = Medicin.create(name: params[:medicin_name], notes: params[:medicin_notes])
-    @patient.medicins = []
-    @patient.medicins << @medicin
-    @patient.save
-    erb :'doctors/updated_patient'
-  end
 end
 
 

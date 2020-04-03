@@ -10,11 +10,12 @@
   <p>You have not chosen a doctor yet.<p>
   <%end%>
 
-  <h4>Medicins:</h4>
+  <h4>Medicins:</h4><br>
   <%if !@patient.medicins.empty?%>
     <%@patient.medicins.each do |medicin|%>
     <li><%=medicin.name%><br>
         <%=medicin.notes%><br>
+        <br>
       <%end%>
       </li>
     <%else%>
@@ -23,4 +24,5 @@
 </ul>
 <br>
 <p>To edit your account information and choose
- or change your doctor go to <a href='/patients/:id/edit'>Edit Patient</a>.</p><br>
+ or change your doctor go to <a href='/patients/id/edit'>Edit Patient</a>.</p><br>
+ <p>To logout go to <a href='/patients/logout'>Log Out</a>.</p>

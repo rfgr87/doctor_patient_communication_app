@@ -4,13 +4,8 @@ class PatientsController < ApplicationController
     erb :'patients/main'
   end
 
-  # post '/patients/login' do
-  #   @patient = Patient.find_by(params[:id])
-  #   erb :"/patients/#{@patient.id}"
-  # end
-
   post '/patients/login' do
-    @patient = Patient.find_by(params[:id])
+    @patient = Patient.find_by(params[:patient_id])
     if @patient && @patient.authenticate(params[:password])
       session[:patient_id] = @patient.id 
       erb :'/patients/show'
@@ -36,22 +31,28 @@ class PatientsController < ApplicationController
     erb :'/patients/failure'
   end
 
-  get '/patients/:id' do 
+  get '/patients/id' do 
     @patient = Patient.find(params[:id])
     erb :'/patients/show'
   end
 
-  get '/patients/:id/edit' do 
+  get '/patients/id/edit' do 
     @patient = Patient.find(session[:patient_id])
     @doctors = Doctor.all
     erb :'/patients/edit'
   end
 
 
-  patch '/patients/:id' do 
-    @patient = Patient.find(params[:id])
-    @patient.update(params["patient"])
+  patch '/patients/id' do 
+    @patient = Patient.find(session[:patient_id])
+    @patient.update(params[:patient])
     @patient.doctor = Doctor.find_by(params["patient[doctor_id]"])
-    redirect "patients/#{@patient.id}"
+    @patient.save
+    erb :'patients/show'
+  end
+
+  get '/patients/logout' do
+    session.clear
+    redirect to '/'
   end
 end
