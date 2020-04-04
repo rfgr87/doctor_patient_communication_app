@@ -18,7 +18,7 @@
     <label>Available Doctors:</label><br>
     <%if @doctors.size != 0%>
       <%@doctors.each do |doctor|%>
-        <input type="radio" name="patient[doctor_id]" id="<%= doctor.id %>" value="<%= doctor.id %>" <%= 'checked' if @patient.doctor == doctor %>><%= doctor.name %></input>
+        <input type="radio" id="<%=doctor.id%>%" name="doctor_id" value="<%=doctor.name%>"><%= doctor.name %></input><br>
         <%end%><br>
       <%else%>
       <p>There are no doctors available at this moment.<p>

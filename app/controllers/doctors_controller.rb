@@ -6,27 +6,28 @@ class DoctorsController < ApplicationController
     erb :'doctors/main'
   end
 
-  get "/doctors/login" do 
+  get '/doctors/login' do 
     erb :'/doctors/login'
   end
 
-  post '/doctors/login' do
-    @doctor = Doctor.find_by(params[:id])
-    if @doctor && @doctor.authenticate(params[:password])
-      session[:doctor_id] = @doctor.id 
-      erb :'/doctors/show'
-    else
-      erb :'/doctors/failure'
-    end
-  end
 
 
   post "/doctors/singup" do
     @doctor = Doctor.create(name: params[:name], username: params[:username], email: params[:email], password: params[:password])
     if !@doctor.id.nil?
-      redirect "/doctors/login"
+      erb :'/doctors/login'
     else
       redirect "/doctors/failure"
+    end
+  end
+
+  post '/doctors/login' do
+    @doctor = Doctor.find_by(username: params[:username], email: params[:email])
+    if @doctor && @doctor.authenticate(params[:password])
+      session[:doctor_id] = @doctor.id 
+      erb :'/doctors/show'
+    else
+      erb :'/doctors/failure'
     end
   end
 

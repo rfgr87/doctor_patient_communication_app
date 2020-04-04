@@ -4,8 +4,13 @@ class PatientsController < ApplicationController
     erb :'patients/main'
   end
 
+  get "/patients/login" do 
+    erb :'/patients/login'
+  end
+
+
   post '/patients/login' do
-    @patient = Patient.find_by(params[:patient_id])
+    @patient = Patient.find_by(username: params[:username], email: params[:email])
     if @patient && @patient.authenticate(params[:password])
       session[:patient_id] = @patient.id 
       erb :'/patients/show'
@@ -13,6 +18,7 @@ class PatientsController < ApplicationController
       erb :'/patients/failure'
     end
   end
+  
 
   post "/patients/singup" do
     @patient = Patient.create(name: params[:name], username: params[:username], email: params[:email], password: params[:password])
@@ -23,10 +29,7 @@ class PatientsController < ApplicationController
     end
   end
 
-  get "/patients/login" do 
-    erb :'/patients/login'
-  end
-
+  
   get "/patients/failure" do
     erb :'/patients/failure'
   end
@@ -46,9 +49,15 @@ class PatientsController < ApplicationController
   patch '/patients/id' do 
     @patient = Patient.find(session[:patient_id])
     @patient.update(params[:patient])
-    @patient.doctor = Doctor.find_by(params["patient[doctor_id]"])
-    @patient.save
-    erb :'patients/show'
+    @doctor = Doctor.find_by(name: params[:doctor_id])
+    @patient.doctor = @doctor
+    @patient.doctor_id = @doctor.id
+    if @patient.doctor == @doctor
+      @patient.save
+      erb :'patients/show'
+    else
+      redirect :'patients/failure'
+    end
   end
 
   get '/patients/logout' do
