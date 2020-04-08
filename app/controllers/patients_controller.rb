@@ -45,7 +45,11 @@ class PatientsController < ApplicationController
     erb :'/patients/edit'
   end
 
-
+  #Only doctor can edit patients
+  #Using dynamic routs
+  #Be more specific on RESTFULL routs
+  #Be less wordy regarding double checks
+  
   patch '/patients/id' do 
     @patient = Patient.find(session[:patient_id])
     @patient.update(params[:patient])
